@@ -10,7 +10,11 @@
   "scripts": {
     "clean": "rm -fr lib",
     "build": "npm run clean && tsc",
-    "dev": "npm run clean && tsc -w"
+    "dev": "npm run clean && tsc -w",
+    "prepare": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "author": "huey.LS",
   "repository": {
