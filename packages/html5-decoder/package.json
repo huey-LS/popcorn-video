@@ -1,5 +1,5 @@
 {
-  "name": "@popcorn/html5-decoder",
+  "name": "@popcorn-video/html5-decoder",
   "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@popcorn/video": "^0.1.0"
+    "@popcorn-video/video": "^0.1.0"
   },
   "devDependencies": {
     "typescript": "^3.6.4"
