@@ -2,7 +2,7 @@ import React, {
   createRef
 } from 'react';
 
-import { Player } from '@popcorn/video';
+import { Player } from '@popcorn-video/video';
 
 import { VideoPlayerContext } from './context';
 

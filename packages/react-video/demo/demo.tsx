@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { createHTML5Decoder } from '@popcorn/html5-decoder';
-import { createFlvjsDecoder } from '@popcorn/flvjs-decoder';
+import { createHTML5Decoder } from '@popcorn-video/html5-decoder';
+import { createFlvjsDecoder } from '@popcorn-video/flvjs-decoder';
 
 import { VideoPlayer, Controls } from '../src';
 

@@ -1,9 +1,9 @@
 import {
   createDecoderFactory,
   Source
-} from '@popcorn/video';
+} from '@popcorn-video/video';
 
-import { HTML5Decoder } from '@popcorn/html5-decoder';
+import { HTML5Decoder } from '@popcorn-video/html5-decoder';
 
 import flvjs from 'flv.js';
 

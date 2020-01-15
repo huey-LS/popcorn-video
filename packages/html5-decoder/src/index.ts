@@ -2,7 +2,7 @@ import {
   Decoder,
   createDecoderFactory,
   Source
-} from '@popcorn/video';
+} from '@popcorn-video/video';
 
 
 export class HTML5Decoder extends Decoder {
