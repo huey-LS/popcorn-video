@@ -1,0 +1,29 @@
+{
+  "name": "@popcorn/flvjs-decoder",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rm -fr lib",
+    "build": "npm run clean && tsc",
+    "dev": "npm run clean && tsc -w"
+  },
+  "author": "huey.LS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huey-LS/popcorn"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@popcorn/video": "^0.1.0",
+    "@popcorn/html5-decoder": "^0.1.0",
+    "flv.js": "^1.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.6.4"
+  }
+}

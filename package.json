@@ -1,0 +1,19 @@
+{
+  "name": "popcorn",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "setup": "lerna link && lerna bootstrap",
+    "build": "lerna run build",
+    "start": "lerna run start",
+    "dev:react-video": "lerna run dev --scope=@popcorn/react-video  --stream"
+  },
+  "author": "huey.LS",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "3.19.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.6.4"
+  }
+}
