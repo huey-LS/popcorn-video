@@ -19,8 +19,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@popcorn/video": "^0.1.0",
     "@popcorn/html5-decoder": "^0.1.0",
+    "@popcorn/video": "^0.1.0",
     "flv.js": "^1.5.0"
   },
   "devDependencies": {
