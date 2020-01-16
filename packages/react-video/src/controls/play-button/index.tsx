@@ -1,21 +1,24 @@
-import React, {
-  useContext
-} from 'react';
+import * as React from 'react';
 
 import { VideoPlayerContext } from '../../player/context';
-
+import { loadStyleLazy } from '../../shared/load-style';
 import { PlayIcon } from '../../icons/play';
 import { PauseIcon } from '../../icons/pause';
 import { RestartIcon } from '../../icons/restart';
 
-export function PlayButton () {
+const {
+  useContext
+} = React;
+
+export function PlayButton (props: {
+  noRestart?: boolean
+}) {
   const playerContext = useContext(VideoPlayerContext);
+  const { noRestart } = props;
 
   return (
     <div
-      style={{
-        margin: 10
-      }}
+      className="popcorn-video-play-button"
     >
       {
         playerContext.state === 'playing' ? (
@@ -26,7 +29,7 @@ export function PlayButton () {
               color='#fff'
             />
           </span>
-        ) : playerContext.state === 'ended' ? (
+        ) : playerContext.state === 'ended' && !noRestart ? (
           <span
             onClick={() => {
               playerContext.seek(0);
@@ -50,3 +53,8 @@ export function PlayButton () {
     </div>
   )
 }
+loadStyleLazy(`
+.popcorn-video-play-button {
+  margin: 10px;
+}
+`);

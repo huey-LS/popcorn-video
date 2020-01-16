@@ -7,13 +7,11 @@
     "setup": "lerna link && lerna bootstrap",
     "build": "lerna run build",
     "start": "lerna run start",
-    "dev:react-video": "lerna run dev --scope=@popcorn/react-video  --stream"
+    "dev:react-video": "lerna run dev --scope=@popcorn-video/react-video  --stream"
   },
   "author": "huey.LS",
   "license": "MIT",
   "devDependencies": {
-    "lerna": "3.19.0",
-    "tslib": "^1.10.0",
-    "typescript": "^3.6.4"
+    "lerna": "3.19.0"
   }
 }

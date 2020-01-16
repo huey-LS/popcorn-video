@@ -40,10 +40,8 @@ function App () {
         ]}
       >
         <Controls.LoadingControl />
-        <Controls.Bar
-          force={true}
-        >
-          <Controls.PlayButton />
+        <Controls.Bar>
+          <Controls.PlayButton noRestart={true} />
           <Controls.RefreshButton />
           <Controls.SpaceControl />
           <Controls.VolumeControl />

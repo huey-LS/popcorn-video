@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 export function FullscreenIcon ({
   color = '#000',

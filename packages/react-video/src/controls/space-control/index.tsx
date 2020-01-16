@@ -1,12 +1,17 @@
-import React from 'react';
+import * as React from 'react';
+import { loadStyleLazy } from '../../shared/load-style';
 
 export function SpaceControl () {
   return (
     <div
-      style={{
-        flex: 1
-      }}
-    >
-    </div>
+      className="popcorn-video-space-control"
+    ></div>
   )
 }
+
+loadStyleLazy(`
+.popcorn-video-space-control {
+  flex: 1
+}
+`);
+

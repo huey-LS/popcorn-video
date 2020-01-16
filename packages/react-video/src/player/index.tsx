@@ -1,10 +1,13 @@
-import React, {
-  createRef
-} from 'react';
+import * as React from 'react';
 
 import { Player } from '@popcorn-video/video';
 
+import { loadStyle } from '../shared/load-style';
 import { VideoPlayerContext } from './context';
+
+const {
+  createRef
+} = React;
 
 export class VideoPlayer extends React.Component<{
   decoders: any[],
@@ -33,7 +36,6 @@ export class VideoPlayer extends React.Component<{
         'error'
       ];
       this._videoPlayer.addAllListener((event: any) => {
-        console.log(event.type);
         if (
           !this._destroyed &&
           ~autoUpdateEventTypes.indexOf(event.type)
@@ -71,7 +73,15 @@ export class VideoPlayer extends React.Component<{
     };
 
     return (
-      <div style={{position: "relative", width: "100%", height: '100%', background: '#000'}}>
+      <div
+        className="popcorn-video"
+        style={{
+          position: "relative",
+          width: "100%",
+          height: '100%',
+          background: '#000'
+        }}
+      >
         <div
           style={{width: "100%", height: '100%'}}
           ref={this.playerBox}
@@ -85,3 +95,12 @@ export class VideoPlayer extends React.Component<{
     )
   }
 }
+
+loadStyle(`
+.popcorn-video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+`);

@@ -1,5 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
+import { loadStyle } from '../shared/load-style';
 export function LoadingIcon ({
   color = '#000',
   size = 20
@@ -37,18 +38,4 @@ loadStyle(`
   0%   { transform: rotate(360deg); }
   100% { transform: rotate(0deg); }
 }
-`)
-
-export function loadStyle (styleString: string): void {
-  var head = document.getElementsByTagName('head')[0];
-  var styleElement = document.createElement('style') as any;
-  if (styleElement.styleSheet) {
-     // Support for IE
-     styleElement.styleSheet.cssText = styleString;
-  } else {
-    // Support for the rest
-    styleElement.appendChild(document.createTextNode(styleString));
-  }
-
-  head.appendChild(styleElement);
-}
+`);

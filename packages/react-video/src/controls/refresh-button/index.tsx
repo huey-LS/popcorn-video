@@ -1,19 +1,19 @@
-import React, {
-  useContext
-} from 'react';
+import * as React from 'react';
 
 import { VideoPlayerContext } from '../../player/context';
-
+import { loadStyleLazy } from '../../shared/load-style';
 import { RefreshIcon } from '../../icons/refresh';
+
+const {
+  useContext
+} = React;
 
 export function RefreshButton () {
   const playerContext = useContext(VideoPlayerContext);
 
   return (
     <div
-      style={{
-        margin: 10
-      }}
+      className="popcorn-video-refresh-button"
     >
       <span
         onClick={() => playerContext.refresh()}
@@ -25,3 +25,8 @@ export function RefreshButton () {
     </div>
   )
 }
+loadStyleLazy(`
+.popcorn-video-refresh-button {
+  margin: 10px;
+}
+`);

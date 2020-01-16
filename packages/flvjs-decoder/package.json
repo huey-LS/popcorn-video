@@ -25,7 +25,8 @@
   "dependencies": {
     "@popcorn-video/html5-decoder": "^0.1.1",
     "@popcorn-video/video": "^0.1.1",
-    "flv.js": "^1.5.0"
+    "flv.js": "^1.5.0",
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "typescript": "^3.6.4"
