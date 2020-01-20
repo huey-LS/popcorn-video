@@ -36,7 +36,7 @@ export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> exte
 }
 
 
-interface DecoderEvents extends CommonEventConfig {
+export interface DecoderEvents extends CommonEventConfig {
   'abort': TypedEventCallback<Event<null>>, // 在播放被终止时触发,例如, 当播放中的视频重新开始播放时会触发这个事件。
   'canplay': TypedEventCallback<Event<null>>, // 在媒体数据已经有足够的数据（至少播放数帧）可供播放时触发
   'ended': TypedEventCallback<Event<null>>, // 播放结束时触发。

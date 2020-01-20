@@ -29,10 +29,10 @@ function App () {
           ]
         }
         sources={[
-          // {
-          //   src: 'http://flv8bcb80ef.live.126.net/live/7e1d4d7b21fb4d5c8bac0881ca55e325.flv?netease=flv8bcb80ef.live.126.net',
-          //   type: 'video/x-flv'
-          // },
+          {
+            src: 'http://flv8bcb80ef.live.126.net/live/7e1d4d7b21fb4d5c8bac0881ca55e325.flv?netease=flv8bcb80ef.live.126.net',
+            type: 'video/x-flv'
+          },
           {
             src: "https://www.w3schools.com/html/mov_bbb.mp4",
             type: "video/mp4"

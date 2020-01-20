@@ -107,13 +107,6 @@ export class FlvjsDecoder extends HTML5Decoder {
     }
   }
 
-  get volume () {
-    if (this.flvPlayer) {
-      this.flvPlayer.volume;
-    }
-    return 0;
-  }
-
   destroy () {
     super.destroy.call(this);
     this.destroyFlyjs();
