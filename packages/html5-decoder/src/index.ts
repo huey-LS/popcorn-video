@@ -77,6 +77,7 @@ export class HTML5Decoder extends Decoder {
 
   setSource (source: Source) {
     this._el.src = source.src;
+    this.setLoading(true);
   }
 
   createVideoElement () {
@@ -106,16 +107,7 @@ export class HTML5Decoder extends Decoder {
 
   setup (dom: HTMLElement) {
     dom.appendChild(this._el);
-
     this.setSource(this.source);
-
-    if (this._autoplay) {
-      setTimeout(() => {
-        try {
-          this.play();
-        } catch (e) {}
-      }, 100);
-    }
   }
 
   play () {

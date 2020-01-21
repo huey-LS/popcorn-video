@@ -1,22 +1,25 @@
 import { Source } from '../types';
-import { Decoder, DecoderFactory } from './decoder';
+import { Decoder, DecoderFactory, DecoderEvents } from './decoder';
 
 import { EventEmitter } from './event-emitter';
 
-export class Player extends EventEmitter {
+export class Player extends EventEmitter<DecoderEvents> {
   decoderFactories: DecoderFactory<any>[];
   decoder?: Decoder;
   sources: Source[];
+  autoplay: boolean;
   _parentDom?: any;
 
   constructor (options: {
     decoders: DecoderFactory<any>[],
-    sources: Source[]
+    sources: Source[],
+    autoplay?: boolean
   }) {
     super();
     this.decoderFactories = options.decoders.filter((decoder) => decoder.isSupported());
     // this.decoder = this.createDecoder();
     this.sources = options.sources;
+    this.autoplay = !!options.autoplay;
     this.setSources(options.sources);
   }
 
@@ -102,6 +105,14 @@ export class Player extends EventEmitter {
     this._parentDom = dom;
     if (this.decoder) {
       this.decoder.setup(dom);
+
+      if (this.autoplay) {
+        this.decoder.once('canplay', () => {
+          try {
+            this.play();
+          } catch (e) {}
+        })
+      }
     }
   }
 

@@ -20,11 +20,13 @@ export class VideoPlayer extends React.Component<{
 
   constructor (props: any) {
     super(props);
-    const decoders = props.decoders;
-    const sources = props.sources;
+    const decoders = this.props.decoders;
+    const sources = this.props.sources;
+    const autoplay = this.props.autoplay;
     this._videoPlayer = new Player({
       decoders,
-      sources
+      sources,
+      autoplay
     });
   }
 
@@ -33,7 +35,7 @@ export class VideoPlayer extends React.Component<{
       const autoUpdateEventTypes = [
         'play', 'pause', 'timeupdate', 'seeked',
         'loadeddata', 'canplay', 'volumechange',
-        'error'
+        'error', 'progress'
       ];
       this._videoPlayer.addAllListener((event: any) => {
         if (
@@ -47,6 +49,7 @@ export class VideoPlayer extends React.Component<{
       this._videoPlayer.setup(
         this.playerBox.current
       );
+      this.forceUpdate();
     }
   }
 

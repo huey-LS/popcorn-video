@@ -133,6 +133,18 @@ export class EventEmitter<EventsConfig extends CommonEventConfig = CommonEventCo
     return removeListener;
   }
 
+  once<K extends keyof EventsConfig>(name: K, callback: EventsConfig[K]) {
+    if (!callback) return;
+    let removeListener: () => void;
+    const autoRemoveCallback: any = (event: any) => {
+      removeListener && removeListener();
+      if (callback) {
+        (callback as any)(event);
+      }
+    }
+    removeListener = this.addListener(name, autoRemoveCallback);
+  }
+
   removeListener (callback: TypedEventCallback) {
     if (this._destroyed) return false;
     let events = this._events;
