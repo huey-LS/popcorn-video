@@ -49,12 +49,6 @@ export class HTML5Decoder extends Decoder {
     this._el = this.createVideoElement();
     this._el.setAttribute('style', 'width: 100%;height: 100%');
 
-    this.initEventFromElement([
-      'canplay',
-      'loadeddata', 'loadedmetadata', 'loadstart', 'progress', 'suspend',
-      'pause', 'play', 'seeked', 'timeupdate', 'volumechange'
-    ]);
-
     this._el.addEventListener('loadstart', () => {
       this.setLoading(true);
     });
@@ -81,6 +75,12 @@ export class HTML5Decoder extends Decoder {
       this.error = error;
       this.emit('error', error);
     })
+
+    this.initEventFromElement([
+      'canplay',
+      'loadeddata', 'loadedmetadata', 'loadstart', 'progress', 'suspend',
+      'pause', 'play', 'seeked', 'timeupdate', 'volumechange'
+    ]);
   }
 
   initEventFromElement (eventNames: string[]) {

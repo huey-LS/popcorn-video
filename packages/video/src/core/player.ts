@@ -85,6 +85,14 @@ export class Player extends EventEmitter<DecoderEvents> {
     return 0;
   }
 
+  get readyState () {
+    if (this.decoder) {
+      return this.decoder.readyState;
+    }
+
+    return 0;
+  }
+
   get state () {
     if (this.decoder) {
       return this.decoder.state;

@@ -49,7 +49,6 @@ export class VideoPlayer extends React.Component<{
       this._videoPlayer.setup(
         this.playerBox.current
       );
-      this.forceUpdate();
     }
   }
 
@@ -67,6 +66,7 @@ export class VideoPlayer extends React.Component<{
       volume: this._videoPlayer.volume,
       muted: this._videoPlayer.muted,
       loading: this._videoPlayer.loading,
+      readyState: this._videoPlayer.readyState,
       error: this._videoPlayer.error,
       play: () => this._videoPlayer.play(),
       pause: () => this._videoPlayer.pause(),

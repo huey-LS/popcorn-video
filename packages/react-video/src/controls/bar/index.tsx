@@ -8,20 +8,37 @@ const {
 } = React;
 
 export function Bar ({
-  force = false,
+  forceShow = false,
+  showOnNotPlaying = true,
+  hideBeforeReady = true,
   children
 }: {
-  force?: boolean,
+  forceShow?: boolean,
+  hideBeforeReady?: boolean,
+  showOnNotPlaying?: boolean,
   children: any
 }) {
   const playerContext = useContext(VideoPlayerContext);
-  const showing = force || (
-    playerContext.state !== 'playing'
+
+  const forceHideBeforeReady = hideBeforeReady && (
+    playerContext.readyState === 0
   );
+
+  const forceShowOnNotPlaying = showOnNotPlaying && (
+    playerContext.state !== 'playing'
+  )
+
+  const forceClassName = forceShow
+    ? ' popcorn-video-bar-showing'
+    : forceHideBeforeReady
+    ? ' popcorn-video-bar-hiding'
+    : forceShowOnNotPlaying
+    ? ' popcorn-video-bar-showing'
+    : '';
 
   return (
     <div
-      className={ "popcorn-video-bar" + (showing ? ' popcorn-video-bar-showing' : '')}
+      className={ "popcorn-video-bar" + forceClassName}
     >
       {children}
     </div>
@@ -43,8 +60,14 @@ loadStyleLazy(`
 .popcorn-video-bar-showing {
   opacity: 1;
 }
+.popcorn-video-bar-hiding {
+  opacity: 0;
+}
 
 .popcorn-video:hover .popcorn-video-bar {
   opacity: 1;
+}
+.popcorn-video-bar-hiding:hover .popcorn-video-bar {
+  opacity: 0;
 }
 `);
