@@ -37,7 +37,6 @@ export class HTML5Decoder extends Decoder {
 
   _el: HTMLVideoElement;
   _htmlAttributes: { [propName: string]: string };
-  _autoplay: boolean;
 
   loading: boolean = false;
 
@@ -45,12 +44,8 @@ export class HTML5Decoder extends Decoder {
     super(source);
 
     this._htmlAttributes = options.htmlAttributes;
-    this._autoplay = !!options.autoplay;
     this._el = this.createVideoElement();
     this._el.setAttribute('style', 'width: 100%;height: 100%');
-    if (this._autoplay) {
-      this._el.setAttribute('autoplay', 'autoplay');
-    }
 
     this.initEventFromElement([
       'canplay', 'error',
@@ -91,6 +86,10 @@ export class HTML5Decoder extends Decoder {
     return el;
   }
 
+  get readyState () {
+    return this._el.readyState;
+  }
+
   get state () {
     if (this._el.ended) {
       return 'ended';
@@ -111,11 +110,21 @@ export class HTML5Decoder extends Decoder {
   }
 
   play () {
-    this._el.play();
+    var promise = this._el.play();
+    if (promise) {
+      return promise;
+    } else {
+      return Promise.resolve();
+    }
   }
 
   pause () {
-    this._el.pause();
+    var promise: any = this._el.pause();
+    if (promise) {
+      return promise;
+    } else {
+      return Promise.resolve();
+    }
   }
 
   seek (targetTime: number) {
@@ -144,9 +153,8 @@ export class HTML5Decoder extends Decoder {
   }
 }
 
-interface HTML5DecoderOptions {
-  htmlAttributes: { [propName: string]: string },
-  autoplay?: boolean
+export interface HTML5DecoderOptions {
+  htmlAttributes: { [propName: string]: string }
 }
 
 export const createHTML5Decoder = createDecoderFactory<HTML5DecoderOptions, HTML5Decoder>(HTML5Decoder);

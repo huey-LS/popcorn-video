@@ -108,9 +108,13 @@ export class Player extends EventEmitter<DecoderEvents> {
 
       if (this.autoplay) {
         this.decoder.once('canplay', () => {
-          try {
+          this.play().then((e) => {
+          }, (e) => {
+            // chrome autoplay-policy-changes: https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
+            // let currentMuted = this.muted;
+            this.setMute(true);
             this.play();
-          } catch (e) {}
+          })
         })
       }
     }
@@ -118,13 +122,17 @@ export class Player extends EventEmitter<DecoderEvents> {
 
   play () {
     if (this.decoder) {
-      this.decoder.play();
+      return this.decoder.play();
+    } else {
+      return Promise.reject();
     }
   }
 
   pause () {
     if (this.decoder) {
-      this.decoder.pause();
+      return this.decoder.pause();
+    } else {
+      return Promise.reject();
     }
   }
 

@@ -14,25 +14,25 @@ function App () {
         decoders={
           [
             createFlvjsDecoder({
-              htmlAttributes: {'abc':'abc'},
+              htmlAttributes: {
+                'autoplay': 'autoplay',
+                'preload': 'auto'
+              },
               flvjsConfig: {
                 isLive: true,
                 hasAudio: true,
                 hasVideo: true
-              },
-              autoplay: true
+              }
             }),
             createHTML5Decoder({
-              htmlAttributes: {'abc':'abc'},
-              autoplay: true
+              htmlAttributes: {
+                'autoplay': 'autoplay',
+                'preload': 'auto'
+              }
             })
           ]
         }
         sources={[
-          {
-            src: 'http://flv8bcb80ef.live.126.net/live/7e1d4d7b21fb4d5c8bac0881ca55e325.flv?netease=flv8bcb80ef.live.126.net',
-            type: 'video/x-flv'
-          },
           {
             src: "https://www.w3schools.com/html/mov_bbb.mp4",
             type: "video/mp4"

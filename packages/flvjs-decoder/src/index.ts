@@ -3,7 +3,7 @@ import {
   Source
 } from '@popcorn-video/video';
 
-import { HTML5Decoder } from '@popcorn-video/html5-decoder';
+import { HTML5Decoder, HTML5DecoderOptions } from '@popcorn-video/html5-decoder';
 
 import flvjs from 'flv.js';
 
@@ -89,17 +89,17 @@ export class FlvjsDecoder extends HTML5Decoder {
     this.setupFlyjs();
   }
 
-  play () {
-    if (this.flvPlayer) {
-      this.flvPlayer.play();
-    }
-  }
+  // play () {
+  //   if (this.flvPlayer) {
+  //     this.flvPlayer.play();
+  //   }
+  // }
 
-  pause () {
-    if (this.flvPlayer) {
-      this.flvPlayer.pause();
-    }
-  }
+  // pause () {
+  //   if (this.flvPlayer) {
+  //     this.flvPlayer.pause();
+  //   }
+  // }
 
   destroy () {
     super.destroy.call(this);
@@ -110,10 +110,8 @@ export class FlvjsDecoder extends HTML5Decoder {
   }
 }
 
-interface FlvjsDecoderOptions {
-  htmlAttributes: { [propName: string]: string },
-  flvjsConfig: any,
-  autoplay?: boolean
+interface FlvjsDecoderOptions extends HTML5DecoderOptions {
+  flvjsConfig: any
 }
 
 export const createFlvjsDecoder = createDecoderFactory<FlvjsDecoderOptions, FlvjsDecoder>(FlvjsDecoder);

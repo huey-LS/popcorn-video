@@ -19,12 +19,13 @@ export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> exte
   }
 
   abstract state: 'ended'|'paused'|'playing';
+  abstract readyState: number;
 
   abstract loading: boolean;
 
   abstract setup (dom: any): void;
   abstract setSource (source: Source): void;
-  abstract play (): void;
+  abstract play (): Promise<any>;
   abstract pause (): void;
   abstract seek (targetTime: number): void;
   abstract setMute (muted: boolean): void;
