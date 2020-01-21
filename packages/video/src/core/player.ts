@@ -53,6 +53,13 @@ export class Player extends EventEmitter<DecoderEvents> {
     }
   }
 
+  get error () {
+    if (this.decoder) {
+      return this.decoder.error;
+    }
+    return null;
+  }
+
   get loading () {
     if (this.decoder) {
       return this.decoder.loading;

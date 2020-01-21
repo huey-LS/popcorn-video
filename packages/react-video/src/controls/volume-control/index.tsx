@@ -55,9 +55,9 @@ export function VolumeControl () {
     );
     return () => {
       listenedParent.removeEventListener('mousemove', moveListener);
-      listenedParent.removeEventListener('mousemove', upListener);
+      listenedParent.removeEventListener('mouseup', upListener);
     }
-  })
+  }, [])
 
   return (
     <div
@@ -79,7 +79,14 @@ export function VolumeControl () {
           )
         }
       </span>
-      <div className="popcorn-video-volume-control-plane">
+      <div
+        className="popcorn-video-volume-control-plane"
+        onMouseOut={(event) => {
+          if (event.currentTarget === event.target) {
+            changingRef.current = null;
+          }
+        }}
+      >
         <div
           className="popcorn-video-volume-control-max"
           ref={maxRef}
@@ -92,6 +99,7 @@ export function VolumeControl () {
             className="popcorn-video-volume-control-change-button"
             style={{ bottom: (volume * 100) + '%' }}
             onMouseDown={(event) => {
+              event.preventDefault();
               changingRef.current = event;
             }}
           ></div>

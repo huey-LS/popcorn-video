@@ -1,6 +1,8 @@
 import {
   createDecoderFactory,
-  Source
+  Source,
+  VideoError,
+  ErrorCodes
 } from '@popcorn-video/video';
 
 import { HTML5Decoder, HTML5DecoderOptions } from '@popcorn-video/html5-decoder';
@@ -51,35 +53,34 @@ export class FlvjsDecoder extends HTML5Decoder {
   setupFlyjs () {
     const source = this.source;
     let mediaDataSource = {
-      // type: source.type === undefined ? 'flv' : source.type,
       type: 'flv',
       url: source.src
     };
-
-    console.log('setupFlyjs', this.source, mediaDataSource);
 
     this.flvPlayer = flvjs.createPlayer(mediaDataSource, this._flvjsConfig);
     this.flvPlayer.attachMediaElement(this._el);
     this.flvPlayer.load();
 
     this.flvPlayer.on(flvjs.Events.ERROR, (errorType: any, errorDetail: any) => {
-      console.log(errorType, errorDetail);
-      // this.error_ = new videojs.MediaError(
-      //   videojs.MediaError.MEDIA_ERR_CUSTOM
-      // );
-      // if (errorType === flvjs.ErrorTypes.NETWORK_ERROR) {
-      //   // 403 or 404
-      //   if (errorDetail === flvjs.ErrorDetails.NETWORK_STATUS_CODE_INVALID) {
-      //     this.error_ = new videojs.MediaError(
-      //       videojs.MediaError.MEDIA_ERR_ABORTED
-      //     );
-      //   } else if (errorDetail === flvjs.ErrorDetails.NETWORK_TIMEOUT) {
-      //     this.error_ = new videojs.MediaError(
-      //       videojs.MediaError.MEDIA_ERR_NETWORK
-      //     );
-      //   }
-      // }
-      // this.trigger('error');
+      let error = new VideoError();
+
+      if (errorType === flvjs.ErrorTypes.NETWORK_ERROR) {
+        error.setCode(
+          ErrorCodes.MEDIA_ERR_NETWORK
+        );
+        // 403 or 404
+        if (errorDetail === flvjs.ErrorDetails.NETWORK_STATUS_CODE_INVALID) {
+          error.setCode(
+            ErrorCodes.MEDIA_ERR_SOURCE_INVALID
+          );
+        } else if (errorDetail === flvjs.ErrorDetails.NETWORK_TIMEOUT) {
+          error.setCode(
+            ErrorCodes.MEDIA_ERR_NETWORK_TIMEOUT
+          );
+        }
+      }
+      this.error = error;
+      this.emit('error', error);
       return;
     })
   }
@@ -88,18 +89,6 @@ export class FlvjsDecoder extends HTML5Decoder {
     dom.appendChild(this._el);
     this.setupFlyjs();
   }
-
-  // play () {
-  //   if (this.flvPlayer) {
-  //     this.flvPlayer.play();
-  //   }
-  // }
-
-  // pause () {
-  //   if (this.flvPlayer) {
-  //     this.flvPlayer.pause();
-  //   }
-  // }
 
   destroy () {
     super.destroy.call(this);

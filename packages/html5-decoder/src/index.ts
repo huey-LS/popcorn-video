@@ -1,7 +1,9 @@
 import {
   Decoder,
   createDecoderFactory,
-  Source
+  Source,
+  VideoError,
+  ErrorCodes
 } from '@popcorn-video/video';
 
 
@@ -48,7 +50,7 @@ export class HTML5Decoder extends Decoder {
     this._el.setAttribute('style', 'width: 100%;height: 100%');
 
     this.initEventFromElement([
-      'canplay', 'error',
+      'canplay',
       'loadeddata', 'loadedmetadata', 'loadstart', 'progress', 'suspend',
       'pause', 'play', 'seeked', 'timeupdate', 'volumechange'
     ]);
@@ -60,6 +62,25 @@ export class HTML5Decoder extends Decoder {
     this._el.addEventListener('canplay', () => {
       this.setLoading(false);
     });
+
+    this._el.addEventListener('error', () => {
+      let elementError = this._el.error;
+      let error = new VideoError();
+      if (elementError) {
+        let elementErrorToVideoErrorMap: any = {
+          1: ErrorCodes.MEDIA_ERR_ABORTED,
+          2: ErrorCodes.MEDIA_ERR_NETWORK,
+          3: ErrorCodes.MEDIA_ERR_DECODE,
+          4: ErrorCodes.MEDIA_ERR_SOURCE_INVALID
+        }
+        let errorCode = elementErrorToVideoErrorMap[elementError.code]
+        if (errorCode) {
+          error.setCode(errorCode);
+        }
+      }
+      this.error = error;
+      this.emit('error', error);
+    })
   }
 
   initEventFromElement (eventNames: string[]) {
@@ -106,6 +127,7 @@ export class HTML5Decoder extends Decoder {
 
   setup (dom: HTMLElement) {
     dom.appendChild(this._el);
+    this.error = null;
     this.setSource(this.source);
   }
 
@@ -135,13 +157,18 @@ export class HTML5Decoder extends Decoder {
   }
 
   get muted () {
+    if (this._el.volume === 0) return true;
     return this._el.muted;
   }
 
   setVolume (volume: number) {
     this._el.volume = volume;
+    if (volume > 0) {
+      this.setMute(false);
+    }
   }
   get volume () {
+    if (this._el.muted) return 0;
     return this._el.volume;
   }
 

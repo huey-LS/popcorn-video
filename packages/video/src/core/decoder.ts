@@ -6,12 +6,15 @@ import {
   TypedEventCallback,
   CommonEventConfig
 } from './event-emitter';
+import { VideoError } from './video-error';
 
 export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> extends EventEmitter<EVENTS> {
   static isCanPlaySource (source: Source) { return false; }
   static isSupported () { return false; }
 
   source: Source;
+
+  error: null|VideoError = null;
 
   constructor (source: Source) {
     super();

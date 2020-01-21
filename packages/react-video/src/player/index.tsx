@@ -34,7 +34,7 @@ export class VideoPlayer extends React.Component<{
     if (this.playerBox.current) {
       const autoUpdateEventTypes = [
         'play', 'pause', 'timeupdate', 'seeked',
-        'loadeddata', 'canplay', 'volumechange',
+        'loadstart', 'loadeddata', 'canplay', 'volumechange',
         'error', 'progress'
       ];
       this._videoPlayer.addAllListener((event: any) => {
@@ -67,6 +67,7 @@ export class VideoPlayer extends React.Component<{
       volume: this._videoPlayer.volume,
       muted: this._videoPlayer.muted,
       loading: this._videoPlayer.loading,
+      error: this._videoPlayer.error,
       play: () => this._videoPlayer.play(),
       pause: () => this._videoPlayer.pause(),
       seek: (targetTime: number) => this._videoPlayer.seek(targetTime),

@@ -46,6 +46,10 @@ function App () {
           <Controls.SpaceControl />
           <Controls.VolumeControl />
         </Controls.Bar>
+        <Controls.ErrorView />
+        <Controls.EndedView
+          content={() => '播放结束啦'}
+        />
       </VideoPlayer>
     </div>
   )
