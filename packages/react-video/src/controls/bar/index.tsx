@@ -38,7 +38,7 @@ export function Bar ({
 
   return (
     <div
-      className={ "popcorn-video-bar" + forceClassName}
+      className={"popcorn-video-bar" + forceClassName}
     >
       {children}
     </div>
@@ -49,6 +49,8 @@ loadStyleLazy(`
 .popcorn-video-bar {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  height: 45px;
   position: absolute;
   left: 0;
   bottom: 0;

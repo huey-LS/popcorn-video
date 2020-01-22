@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { createHTML5Decoder } from '@popcorn-video/html5-decoder';
 import { createFlvjsDecoder } from '@popcorn-video/flvjs-decoder';
+import { createHlsjsDecoder } from '@popcorn-video/hlsjs-decoder';
 
 import { VideoPlayer, Controls } from '../src';
 
@@ -13,6 +14,19 @@ function App () {
         autoplay={true}
         decoders={
           [
+            createHTML5Decoder({
+              htmlAttributes: {
+                'autoplay': 'autoplay',
+                'preload': 'auto'
+              }
+            }),
+            createHlsjsDecoder({
+              htmlAttributes: {
+                'autoplay': 'autoplay',
+                'preload': 'auto'
+              },
+              hlsjsConfig: {}
+            }),
             createFlvjsDecoder({
               htmlAttributes: {
                 'autoplay': 'autoplay',
@@ -23,12 +37,6 @@ function App () {
                 hasAudio: true,
                 hasVideo: true
               }
-            }),
-            createHTML5Decoder({
-              htmlAttributes: {
-                'autoplay': 'autoplay',
-                'preload': 'auto'
-              }
             })
           ]
         }
@@ -36,6 +44,10 @@ function App () {
           {
             src: "https://www.w3schools.com/html/mov_bbb.mp4",
             type: "video/mp4"
+          },
+          {
+            src: "https://mnmedias.api.telequebec.tv/m3u8/29880.m3u8",
+            type: "application/x-mpegURL"
           }
         ]}
       >
@@ -44,6 +56,19 @@ function App () {
           <Controls.PlayButton noRestart={true} />
           <Controls.RefreshButton />
           <Controls.SpaceControl />
+          <Controls.ProgressControl />
+          <div style={{
+            width: 70,
+            color: '#fff',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            fontSize: 12
+          }}>
+            <Controls.CurrentTimeView />
+            <span>/</span>
+            <Controls.DurationView />
+          </div>
           <Controls.VolumeControl />
         </Controls.Bar>
         <Controls.ErrorView />

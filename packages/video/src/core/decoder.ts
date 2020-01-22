@@ -27,7 +27,9 @@ export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> exte
   abstract loading: boolean;
 
   abstract setup (dom: any): void;
-  abstract setSource (source: Source): void;
+  setSource (source: Source) {
+    this.source = source;
+  };
   abstract play (): Promise<any>;
   abstract pause (): void;
   abstract seek (targetTime: number): void;
@@ -37,6 +39,7 @@ export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> exte
   abstract volume: number;
   abstract buffered: number;
   abstract currentTime: number;
+  abstract duration: number;
 }
 
 

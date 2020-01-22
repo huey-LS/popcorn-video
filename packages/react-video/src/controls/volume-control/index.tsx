@@ -110,8 +110,9 @@ export function VolumeControl () {
 }
 loadStyleLazy(`
 .popcorn-video-volume-control {
-  margin: 10px;
+  margin: 0 10px;
   position: relative;
+  font-size: 0;
 }
 
 .popcorn-video-volume-control-muted-button {

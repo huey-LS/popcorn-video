@@ -27,6 +27,7 @@ export function RefreshButton () {
 }
 loadStyleLazy(`
 .popcorn-video-refresh-button {
-  margin: 10px;
+  margin: 0 10px;
+  cursor: pointer;
 }
 `);

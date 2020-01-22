@@ -37,6 +37,7 @@ export class FlvjsDecoder extends HTML5Decoder {
   }
 
   setSource (source: Source) {
+    this.source = source;
     this.destroyFlyjs();
     this.setupFlyjs();
     this.setLoading(true);
@@ -85,17 +86,9 @@ export class FlvjsDecoder extends HTML5Decoder {
     })
   }
 
-  setup (dom: HTMLElement) {
-    dom.appendChild(this._el);
-    this.setupFlyjs();
-  }
-
   destroy () {
     super.destroy.call(this);
     this.destroyFlyjs();
-    if (this._el.parentNode) {
-      this._el.parentNode.removeChild(this._el);
-    }
   }
 }
 

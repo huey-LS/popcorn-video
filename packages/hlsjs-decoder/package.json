@@ -7,7 +7,6 @@
     "index.js",
     "lib"
   ],
-  "private": true,
   "scripts": {
     "clean": "rm -fr lib",
     "build": "npm run clean && tsc",
@@ -26,7 +25,7 @@
   "dependencies": {
     "@popcorn-video/html5-decoder": "^0.1.6",
     "@popcorn-video/video": "^0.1.6",
-    "flv.js": "^1.5.0",
+    "@types/hls.js": "^0.12.5",
     "hls.js": "^0.13.1",
     "tslib": "^1.10.0"
   },

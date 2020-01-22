@@ -37,6 +37,10 @@ export class HTML5Decoder extends Decoder {
     return this._el.currentTime;
   };
 
+  get duration () {
+    return this._el.duration || 0;
+  }
+
   _el: HTMLVideoElement;
   _htmlAttributes: { [propName: string]: string };
 
@@ -92,6 +96,7 @@ export class HTML5Decoder extends Decoder {
   }
 
   setSource (source: Source) {
+    super.setSource.call(this, source);
     this._el.src = source.src;
     this.setLoading(true);
   }

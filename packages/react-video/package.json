@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@popcorn-video/flvjs-decoder": "^0.1.6",
+    "@popcorn-video/hlsjs-decoder": "^0.1.6",
     "@popcorn-video/html5-decoder": "^0.1.6",
     "@types/react": "^16.9.15",
     "@types/react-dom": "^16.9.4",

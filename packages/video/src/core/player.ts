@@ -82,6 +82,9 @@ export class Player extends EventEmitter<DecoderEvents> {
   }
 
   get duration () {
+    if (this.decoder) {
+      return this.decoder.duration;
+    }
     return 0;
   }
 
@@ -126,7 +129,6 @@ export class Player extends EventEmitter<DecoderEvents> {
           this.play().then((e) => {
           }, (e) => {
             // chrome autoplay-policy-changes: https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
-            // let currentMuted = this.muted;
             this.setMute(true);
             this.play();
           })
