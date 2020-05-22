@@ -1,6 +1,6 @@
 {
   "name": "@popcorn-video/hlsjs-decoder",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -23,8 +23,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@popcorn-video/html5-decoder": "^0.1.6",
-    "@popcorn-video/video": "^0.1.6",
+    "@popcorn-video/html5-decoder": "^0.1.7",
+    "@popcorn-video/video": "^0.1.7",
     "@types/hls.js": "^0.12.5",
     "hls.js": "^0.13.1",
     "tslib": "^1.10.0"
