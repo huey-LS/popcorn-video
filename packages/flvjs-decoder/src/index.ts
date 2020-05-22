@@ -124,7 +124,7 @@ export class FlvjsDecoder extends FlvjsBaseDecoder<HTMLVideoElement> {
 }
 
 interface FlvjsDecoderOptions extends HTML5DecoderOptions {
-  flvjsConfig: any
+  flvjsConfig: FlvjsConfig
 }
 
 export const createFlvjsDecoder = createDecoderFactory<FlvjsDecoderOptions, FlvjsDecoder>(FlvjsDecoder);
