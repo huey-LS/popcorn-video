@@ -1,6 +1,6 @@
 {
   "name": "@popcorn-video/react-video",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -30,9 +30,9 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@popcorn-video/flvjs-decoder": "^0.1.7",
-    "@popcorn-video/hlsjs-decoder": "^0.1.7",
-    "@popcorn-video/html5-decoder": "^0.1.7",
+    "@popcorn-video/flvjs-decoder": "^0.1.8",
+    "@popcorn-video/hlsjs-decoder": "^0.1.8",
+    "@popcorn-video/html5-decoder": "^0.1.8",
     "@types/react": "^16.9.15",
     "@types/react-dom": "^16.9.4",
     "cross-env": "^6.0.3",

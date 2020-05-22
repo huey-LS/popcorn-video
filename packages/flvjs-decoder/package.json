@@ -1,6 +1,6 @@
 {
   "name": "@popcorn-video/flvjs-decoder",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "main": "lib/index.js",
   "files": [
@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@popcorn-video/html5-decoder": "^0.1.7",
+    "@popcorn-video/html5-decoder": "^0.1.8",
     "@popcorn-video/video": "^0.1.7",
     "flv.js": "^1.5.0",
     "tslib": "^1.10.0"
