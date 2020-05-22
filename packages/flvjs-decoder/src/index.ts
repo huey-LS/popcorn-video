@@ -5,35 +5,32 @@ import {
   ErrorCodes
 } from '@popcorn-video/video';
 
-import { HTML5Decoder, HTML5DecoderOptions } from '@popcorn-video/html5-decoder';
+import {
+  HTML5BaseDecoder,
+  HTML5DecoderOptions
+} from '@popcorn-video/html5-decoder';
 
 import flvjs from 'flv.js';
 
+interface FlvjsConfig {
+  isLive?: boolean,
+  hasAudio?: boolean,
+  hasVideo?: boolean
+}
 
-export class FlvjsDecoder extends HTML5Decoder {
-  static isSupported () {
-    return flvjs && flvjs.isSupported();
-  }
-  static isCanPlaySource (source: Source) {
-    const type = source.type;
-    const supportedTypes = {
-      'video/flv': true,
-      'video/x-flv': true
-    };
-    if (FlvjsDecoder.isSupported() && (supportedTypes as any)[type]) {
-      return true;
-    }
-
-    return false;
-  }
-
+export abstract class FlvjsBaseDecoder<ME extends HTMLVideoElement|HTMLAudioElement> extends HTML5BaseDecoder<ME> {
   _flvjsConfig: any;
 
   flvPlayer?: any;
 
+  _defaultFlvjsConfig: FlvjsConfig = {}
+
   constructor (source: Source, options: FlvjsDecoderOptions) {
     super(source, options);
-    this._flvjsConfig = options.flvjsConfig;
+    this._flvjsConfig = {
+      ...this._defaultFlvjsConfig,
+      ...options.flvjsConfig || {}
+    };
   }
 
   setSource (source: Source) {
@@ -92,8 +89,78 @@ export class FlvjsDecoder extends HTML5Decoder {
   }
 }
 
+export class FlvjsDecoder extends FlvjsBaseDecoder<HTMLVideoElement> {
+  static isSupported () {
+    return flvjs && flvjs.isSupported();
+  }
+  static isCanPlaySource (source: Source) {
+    const type = source.type;
+    const supportedTypes = {
+      'video/flv': true,
+      'video/x-flv': true
+    };
+    if (FlvjsDecoder.isSupported() && (supportedTypes as any)[type]) {
+      return true;
+    }
+
+    return false;
+  }
+
+  _defaultFlvjsConfig = {
+    hasAudio: true,
+    hasVideo: true
+  }
+
+  createElement (): HTMLVideoElement {
+    let el = document.createElement('video');
+    let htmlAttributes = Object.assign({}, this._htmlAttributes);
+    Object.keys(htmlAttributes)
+      .forEach((attributeName) => {
+        el.setAttribute(attributeName, htmlAttributes[attributeName]);
+      });
+
+    return el;
+  }
+}
+
 interface FlvjsDecoderOptions extends HTML5DecoderOptions {
   flvjsConfig: any
 }
 
 export const createFlvjsDecoder = createDecoderFactory<FlvjsDecoderOptions, FlvjsDecoder>(FlvjsDecoder);
+
+export class FlvjsAudioDecoder extends FlvjsBaseDecoder<HTMLAudioElement> {
+  static isSupported () {
+    return flvjs && flvjs.isSupported();
+  }
+  static isCanPlaySource (source: Source) {
+    const type = source.type;
+    const supportedTypes = {
+      'audio/flv': true,
+      'audio/x-flv': true
+    };
+    if (FlvjsDecoder.isSupported() && (supportedTypes as any)[type]) {
+      return true;
+    }
+
+    return false;
+  }
+
+  _defaultFlvjsConfig = {
+    hasAudio: true,
+    hasVideo: false
+  }
+
+  createElement (): HTMLAudioElement {
+    let el = document.createElement('audio');
+    let htmlAttributes = Object.assign({}, this._htmlAttributes);
+    Object.keys(htmlAttributes)
+      .forEach((attributeName) => {
+        el.setAttribute(attributeName, htmlAttributes[attributeName]);
+      });
+
+    return el;
+  }
+}
+
+export const createFlvjsAudioDecoder = createDecoderFactory<FlvjsDecoderOptions, FlvjsAudioDecoder>(FlvjsAudioDecoder);

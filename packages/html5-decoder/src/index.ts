@@ -7,27 +7,7 @@ import {
 } from '@popcorn-video/video';
 
 
-export class HTML5Decoder extends Decoder {
-  static _testVideoElement?: HTMLVideoElement;
-  static get lazyTestVideoElement () {
-    if (!this._testVideoElement) {
-      this._testVideoElement = document.createElement('video');
-    }
-    return this._testVideoElement;
-  }
-
-  static isSupported () {
-    try {
-      this.lazyTestVideoElement.volume = 0.5;
-    } catch (e) {
-      return false
-    }
-    return !!(this.lazyTestVideoElement && this.lazyTestVideoElement.canPlayType);
-  }
-  static isCanPlaySource (source: Source) {
-    return this.lazyTestVideoElement.canPlayType(source.type) !== '';
-  }
-
+export abstract class HTML5BaseDecoder<ME extends HTMLVideoElement|HTMLAudioElement> extends Decoder {
   get buffered () {
     const timeRanges = this._el.buffered;
     if (!timeRanges.length) return 0;
@@ -41,7 +21,7 @@ export class HTML5Decoder extends Decoder {
     return this._el.duration || 0;
   }
 
-  _el: HTMLVideoElement;
+  _el: ME;
   _htmlAttributes: { [propName: string]: string };
 
   loading: boolean = false;
@@ -50,7 +30,7 @@ export class HTML5Decoder extends Decoder {
     super(source);
 
     this._htmlAttributes = options.htmlAttributes;
-    this._el = this.createVideoElement();
+    this._el = this.createElement();
     this._el.setAttribute('style', 'width: 100%;height: 100%');
 
     this._el.addEventListener('loadstart', () => {
@@ -101,16 +81,7 @@ export class HTML5Decoder extends Decoder {
     this.setLoading(true);
   }
 
-  createVideoElement () {
-    let el = document.createElement('video');
-    let htmlAttributes = Object.assign({}, this._htmlAttributes);
-    Object.keys(htmlAttributes)
-      .forEach((attributeName) => {
-        el.setAttribute(attributeName, htmlAttributes[attributeName]);
-      });
-
-    return el;
-  }
+  abstract createElement (): ME;
 
   get readyState () {
     return this._el.readyState;
@@ -185,8 +156,79 @@ export class HTML5Decoder extends Decoder {
   }
 }
 
-export interface HTML5DecoderOptions {
-  htmlAttributes: { [propName: string]: string }
+
+export class HTML5Decoder extends HTML5BaseDecoder<HTMLVideoElement> {
+  static _testElement?: HTMLVideoElement;
+  static get lazyTestElement () {
+    if (!this._testElement) {
+      this._testElement = document.createElement('video');
+    }
+    return this._testElement;
+  }
+
+  static isSupported () {
+    try {
+      this.lazyTestElement.volume = 0.5;
+    } catch (e) {
+      return false
+    }
+    return !!(this.lazyTestElement && this.lazyTestElement.canPlayType);
+  }
+  static isCanPlaySource (source: Source) {
+    return this.lazyTestElement.canPlayType(source.type) !== '';
+  }
+
+
+  createElement (): HTMLVideoElement {
+    let el = document.createElement('video');
+    let htmlAttributes = Object.assign({}, this._htmlAttributes);
+    Object.keys(htmlAttributes)
+      .forEach((attributeName) => {
+        el.setAttribute(attributeName, htmlAttributes[attributeName]);
+      });
+
+    return el;
+  }
 }
 
 export const createHTML5Decoder = createDecoderFactory<HTML5DecoderOptions, HTML5Decoder>(HTML5Decoder);
+
+export class HTML5AudioDecoder extends HTML5BaseDecoder<HTMLAudioElement> {
+  static _testElement?: HTMLAudioElement;
+  static get lazyTestElement () {
+    if (!this._testElement) {
+      this._testElement = document.createElement('video');
+    }
+    return this._testElement;
+  }
+
+  static isSupported () {
+    try {
+      this.lazyTestElement.volume = 0.5;
+    } catch (e) {
+      return false
+    }
+    return !!(this.lazyTestElement && this.lazyTestElement.canPlayType);
+  }
+  static isCanPlaySource (source: Source) {
+    return this.lazyTestElement.canPlayType(source.type) !== '';
+  }
+
+
+  createElement (): HTMLAudioElement {
+    let el = document.createElement('audio');
+    let htmlAttributes = Object.assign({}, this._htmlAttributes);
+    Object.keys(htmlAttributes)
+      .forEach((attributeName) => {
+        el.setAttribute(attributeName, htmlAttributes[attributeName]);
+      });
+
+    return el;
+  }
+}
+
+export const createHTML5AudioDecoder = createDecoderFactory<HTML5DecoderOptions, HTML5AudioDecoder>(HTML5AudioDecoder);
+
+export interface HTML5DecoderOptions {
+  htmlAttributes: { [propName: string]: string }
+}
