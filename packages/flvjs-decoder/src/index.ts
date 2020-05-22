@@ -32,8 +32,12 @@ export abstract class FlvjsBaseDecoder<ME extends HTMLVideoElement|HTMLAudioElem
 
   flvPlayer?: any;
 
-  _defaultFlvjsMediaConfig: FlvjsMediaConfig = {}
-  _defaultFlvjsConfig: FlvjsConfig = {}
+  get _defaultFlvjsMediaConfig (): FlvjsMediaConfig {
+    return {};
+  }
+  get _defaultFlvjsConfig (): FlvjsConfig {
+    return {};
+  }
 
   constructor (source: Source, options: FlvjsDecoderOptions) {
     super(source, options);
@@ -64,9 +68,14 @@ export abstract class FlvjsBaseDecoder<ME extends HTMLVideoElement|HTMLAudioElem
 
   setupFlyjs () {
     const source = this.source;
+    const {
+      src,
+      type,
+      ...otherSource
+    } = source;
     let mediaDataSource = {
       ...this._flvjsMediaConfig,
-      ...source,
+      ...otherSource,
       type: 'flv',
       url: source.src
     };
@@ -122,9 +131,11 @@ export class FlvjsDecoder extends FlvjsBaseDecoder<HTMLVideoElement> {
     return false;
   }
 
-  _defaultFlvjsMediaConfig = {
-    hasAudio: true,
-    hasVideo: true
+  get _defaultFlvjsMediaConfig () {
+    return {
+      hasAudio: true,
+      hasVideo: true
+    }
   }
 
   createElement (): HTMLVideoElement {
@@ -163,11 +174,12 @@ export class FlvjsAudioDecoder extends FlvjsBaseDecoder<HTMLAudioElement> {
     return false;
   }
 
-  _defaultFlvjsMediaConfig = {
-    hasAudio: true,
-    hasVideo: false
+  get _defaultFlvjsMediaConfig () {
+    return {
+      hasAudio: true,
+      hasVideo: false
+    }
   }
-
   createElement (): HTMLAudioElement {
     let el = document.createElement('audio');
     let htmlAttributes = Object.assign({}, this._htmlAttributes);
