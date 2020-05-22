@@ -197,7 +197,7 @@ export class HTML5AudioDecoder extends HTML5BaseDecoder<HTMLAudioElement> {
   static _testElement?: HTMLAudioElement;
   static get lazyTestElement () {
     if (!this._testElement) {
-      this._testElement = document.createElement('video');
+      this._testElement = document.createElement('audio');
     }
     return this._testElement;
   }

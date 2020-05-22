@@ -12,25 +12,39 @@ import {
 
 import flvjs from 'flv.js';
 
-interface FlvjsConfig {
+interface FlvjsMediaConfig {
   isLive?: boolean,
   hasAudio?: boolean,
-  hasVideo?: boolean
+  hasVideo?: boolean,
+  cors?: boolean,
+  withCredentials?: boolean,
+  // Indicates total media duration, in milliseconds
+  duration?: number
+}
+
+interface FlvjsConfig extends flvjs.Config {
+
 }
 
 export abstract class FlvjsBaseDecoder<ME extends HTMLVideoElement|HTMLAudioElement> extends HTML5BaseDecoder<ME> {
-  _flvjsConfig: any;
+  _flvjsMediaConfig: FlvjsMediaConfig;
+  _flvjsConfig: FlvjsConfig;
 
   flvPlayer?: any;
 
+  _defaultFlvjsMediaConfig: FlvjsMediaConfig = {}
   _defaultFlvjsConfig: FlvjsConfig = {}
 
   constructor (source: Source, options: FlvjsDecoderOptions) {
     super(source, options);
+    this._flvjsMediaConfig = {
+      ...this._defaultFlvjsMediaConfig,
+      ...(options.flvjsMediaConfig || {})
+    };
     this._flvjsConfig = {
       ...this._defaultFlvjsConfig,
-      ...options.flvjsConfig || {}
-    };
+      ...(options.flvjsConfig || {})
+    }
   }
 
   setSource (source: Source) {
@@ -51,6 +65,8 @@ export abstract class FlvjsBaseDecoder<ME extends HTMLVideoElement|HTMLAudioElem
   setupFlyjs () {
     const source = this.source;
     let mediaDataSource = {
+      ...this._flvjsMediaConfig,
+      ...source,
       type: 'flv',
       url: source.src
     };
@@ -106,7 +122,7 @@ export class FlvjsDecoder extends FlvjsBaseDecoder<HTMLVideoElement> {
     return false;
   }
 
-  _defaultFlvjsConfig = {
+  _defaultFlvjsMediaConfig = {
     hasAudio: true,
     hasVideo: true
   }
@@ -124,7 +140,8 @@ export class FlvjsDecoder extends FlvjsBaseDecoder<HTMLVideoElement> {
 }
 
 interface FlvjsDecoderOptions extends HTML5DecoderOptions {
-  flvjsConfig: FlvjsConfig
+  flvjsConfig: FlvjsConfig,
+  flvjsMediaConfig: FlvjsMediaConfig
 }
 
 export const createFlvjsDecoder = createDecoderFactory<FlvjsDecoderOptions, FlvjsDecoder>(FlvjsDecoder);
@@ -139,14 +156,14 @@ export class FlvjsAudioDecoder extends FlvjsBaseDecoder<HTMLAudioElement> {
       'audio/flv': true,
       'audio/x-flv': true
     };
-    if (FlvjsDecoder.isSupported() && (supportedTypes as any)[type]) {
+    if (FlvjsAudioDecoder.isSupported() && (supportedTypes as any)[type]) {
       return true;
     }
 
     return false;
   }
 
-  _defaultFlvjsConfig = {
+  _defaultFlvjsMediaConfig = {
     hasAudio: true,
     hasVideo: false
   }
