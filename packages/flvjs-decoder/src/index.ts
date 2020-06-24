@@ -29,6 +29,7 @@ interface FlvjsConfig extends flvjs.Config {
 export abstract class FlvjsBaseDecoder<ME extends HTMLVideoElement|HTMLAudioElement> extends HTML5BaseDecoder<ME> {
   _flvjsMediaConfig: FlvjsMediaConfig;
   _flvjsConfig: FlvjsConfig;
+  _flvjsLoggingConfig: Partial<flvjs.LoggingControlConfig>
 
   flvPlayer?: any;
 
@@ -49,6 +50,8 @@ export abstract class FlvjsBaseDecoder<ME extends HTMLVideoElement|HTMLAudioElem
       ...this._defaultFlvjsConfig,
       ...(options.flvjsConfig || {})
     }
+
+    this._flvjsLoggingConfig = options.flvjsLoggingConfig || {};
   }
 
   setSource (source: Source) {
@@ -79,6 +82,10 @@ export abstract class FlvjsBaseDecoder<ME extends HTMLVideoElement|HTMLAudioElem
       type: 'flv',
       url: source.src
     };
+
+
+
+    flvjs.LoggingControl.applyConfig(this._flvjsLoggingConfig);
 
     this.flvPlayer = flvjs.createPlayer(mediaDataSource, this._flvjsConfig);
     this.flvPlayer.attachMediaElement(this._el);
@@ -152,7 +159,8 @@ export class FlvjsDecoder extends FlvjsBaseDecoder<HTMLVideoElement> {
 
 interface FlvjsDecoderOptions extends HTML5DecoderOptions {
   flvjsConfig: FlvjsConfig,
-  flvjsMediaConfig: FlvjsMediaConfig
+  flvjsMediaConfig: FlvjsMediaConfig,
+  flvjsLoggingConfig?: Partial<flvjs.LoggingControlConfig>
 }
 
 export const createFlvjsDecoder = createDecoderFactory<FlvjsDecoderOptions, FlvjsDecoder>(FlvjsDecoder);
