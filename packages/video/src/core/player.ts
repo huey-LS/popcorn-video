@@ -8,18 +8,21 @@ export class Player extends EventEmitter<DecoderEvents> {
   decoder?: Decoder;
   sources: Source[];
   autoplay: boolean;
+  loop: boolean;
   _parentDom?: any;
 
   constructor (options: {
     decoders: DecoderFactory<any>[],
     sources: Source[],
-    autoplay?: boolean
+    autoplay?: boolean,
+    loop?: boolean,
   }) {
     super();
     this.decoderFactories = options.decoders.filter((decoder) => decoder.isSupported());
     // this.decoder = this.createDecoder();
     this.sources = options.sources;
     this.autoplay = !!options.autoplay;
+    this.loop = !!options.loop;
     this.setSources(options.sources);
   }
 
@@ -124,6 +127,9 @@ export class Player extends EventEmitter<DecoderEvents> {
     if (this.decoder) {
       this.decoder.setup(dom);
 
+      if (this.loop) {
+        this.decoder.setLoop(true);
+      }
       if (this.autoplay) {
         this.decoder.once('canplay', () => {
           this.play().then((e) => {

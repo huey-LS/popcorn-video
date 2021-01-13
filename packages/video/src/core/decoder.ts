@@ -37,6 +37,8 @@ export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> exte
   abstract muted: boolean;
   abstract setVolume (volume: number): void;
   abstract volume: number;
+  abstract setLoop (loop: boolean): void;
+  abstract loop: boolean;
   abstract buffered: number;
   abstract currentTime: number;
   abstract duration: number;
