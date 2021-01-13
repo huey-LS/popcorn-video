@@ -12,7 +12,8 @@ const {
 export class VideoPlayer extends React.Component<{
   decoders: any[],
   sources: any[],
-  autoplay?: boolean
+  autoplay?: boolean,
+  loop?: boolean
 }> {
   playerBox = createRef<HTMLDivElement>();
   _videoPlayer: Player;
@@ -23,10 +24,12 @@ export class VideoPlayer extends React.Component<{
     const decoders = this.props.decoders;
     const sources = this.props.sources;
     const autoplay = this.props.autoplay;
+    const loop = this.props.loop;
     this._videoPlayer = new Player({
       decoders,
       sources,
-      autoplay
+      autoplay,
+      loop
     });
   }
 
