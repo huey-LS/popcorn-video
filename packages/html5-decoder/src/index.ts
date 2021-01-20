@@ -31,9 +31,8 @@ export abstract class HTML5BaseDecoder<ME extends HTMLVideoElement|HTMLAudioElem
 
     this._htmlAttributes = options.htmlAttributes;
     this._el = this.createElement();
-    if (this._htmlAttributes.style) {
-      this._el.setAttribute('style', 'width: 100%;height: 100%;' + this._htmlAttributes.style);
-    }
+    const customStyle = this._htmlAttributes.style || '';
+    this._el.setAttribute('style', 'width: 100%;height: 100%;' + customStyle);
 
     this._el.addEventListener('loadstart', () => {
       this.setLoading(true);
