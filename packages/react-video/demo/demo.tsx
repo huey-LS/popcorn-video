@@ -32,10 +32,12 @@ function App () {
                 'autoplay': 'autoplay',
                 'preload': 'auto'
               },
-              flvjsConfig: {
-                isLive: true,
+              flvjsMediaConfig: {
                 hasAudio: true,
                 hasVideo: true
+              },
+              flvjsConfig: {
+                isLive: true
               }
             })
           ]

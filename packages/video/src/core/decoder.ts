@@ -7,6 +7,7 @@ import {
   CommonEventConfig
 } from './event-emitter';
 import { VideoError } from './video-error';
+import { ValueOfPlayState } from '../shared/constants';
 
 export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> extends EventEmitter<EVENTS> {
   static isCanPlaySource (source: Source) { return false; }
@@ -21,7 +22,8 @@ export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> exte
     this.source = source;
   }
 
-  abstract state: 'ended'|'paused'|'playing';
+  abstract state: ValueOfPlayState;
+
   abstract readyState: number;
 
   abstract loading: boolean;

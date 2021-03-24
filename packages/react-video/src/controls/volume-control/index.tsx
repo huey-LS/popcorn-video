@@ -1,18 +1,22 @@
-import * as React from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from 'react';
 
 import { VideoPlayerContext } from '../../player/context';
 import { loadStyleLazy } from '../../shared/load-style';
 import { VolumeIcon } from '../../icons/volume';
 import { VolumeMutedIcon } from '../../icons/volume-muted';
 
-const {
-  useContext,
-  useEffect,
-  useState,
-  useRef,
-} = React;
-
-export function VolumeControl () {
+export function VolumeControl ({
+  className = '',
+  progressBarClassName = ''
+}: {
+  className?: string,
+  progressBarClassName?: string
+}) {
   const playerContext = useContext(VideoPlayerContext);
   const muted = playerContext.muted;
   const volume = playerContext.volume;
@@ -61,7 +65,7 @@ export function VolumeControl () {
 
   return (
     <div
-      className="popcorn-video-volume-control"
+      className={['popcorn-video-volume-control', className].join(' ')}
     >
       <span
         className="popcorn-video-volume-control-muted-button"
@@ -81,22 +85,21 @@ export function VolumeControl () {
       </span>
       <div
         className="popcorn-video-volume-control-plane"
-        onMouseOut={(event) => {
-          if (event.currentTarget === event.target) {
-            changingRef.current = null;
-          }
-        }}
       >
         <div
           className="popcorn-video-volume-control-max"
           ref={maxRef}
         >
           <div
-            className="popcorn-video-volume-control-current"
+            className={['popcorn-video-volume-control-current', progressBarClassName].join(' ')}
             style={{ height: (volume * 100) + '%' }}
           ></div>
           <div
-            className="popcorn-video-volume-control-change-button"
+            className={
+              "popcorn-video-volume-control-change-button" + (
+                changingRef.current ? ' popcorn-video-volume-control-change-button-grabbing' : ''
+              )
+            }
             style={{ bottom: (volume * 100) + '%' }}
             onMouseDown={(event) => {
               event.preventDefault();
@@ -159,6 +162,14 @@ loadStyleLazy(`
   background: #fff;
   box-shadow: 0 0 5px #ccc;
   cursor: pointer;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.popcorn-video-volume-control-change-button-grabbing {
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
 }
 
 .popcorn-video-volume-control:hover .popcorn-video-volume-control-plane {
