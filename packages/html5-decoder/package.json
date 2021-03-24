@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@popcorn-video/video": "^0.1.7",
+    "@popcorn-video/video": "^0.1.9",
     "tslib": "^1.10.0"
   },
   "devDependencies": {
