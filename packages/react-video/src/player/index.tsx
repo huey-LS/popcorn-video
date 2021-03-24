@@ -38,7 +38,7 @@ export class VideoPlayer extends React.Component<{
       const autoUpdateEventTypes = [
         'play', 'pause', 'timeupdate', 'seeked',
         'loadstart', 'loadeddata', 'canplay', 'volumechange',
-        'error', 'progress'
+        'error', 'progress', 'ratechange'
       ];
       this._videoPlayer.addAllListener((event: any) => {
         if (
@@ -68,6 +68,7 @@ export class VideoPlayer extends React.Component<{
       buffered: this._videoPlayer.buffered,
       volume: this._videoPlayer.volume,
       muted: this._videoPlayer.muted,
+      playbackRate: this._videoPlayer.playbackRate,
       loading: this._videoPlayer.loading,
       readyState: this._videoPlayer.readyState,
       error: this._videoPlayer.error,
@@ -76,6 +77,7 @@ export class VideoPlayer extends React.Component<{
       seek: (targetTime: number) => this._videoPlayer.seek(targetTime),
       setMute: (muted: boolean) => this._videoPlayer.setMute(muted),
       setVolume: (volume: number) => this._videoPlayer.setVolume(volume),
+      setPlaybackRate: (playbackRate: number) => this._videoPlayer.setPlaybackRate(playbackRate),
       refresh: () => this._videoPlayer.refresh()
     };
 

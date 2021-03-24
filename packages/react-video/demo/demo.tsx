@@ -71,6 +71,14 @@ function App () {
             <span>/</span>
             <Controls.DurationView />
           </div>
+          <Controls.PlaybackRateControl
+            options={[
+              { value: 2, text: '2x' },
+              { value: 1.5, text: '1.5x' },
+              { value: 1, text: '1x' },
+              { value: 0.5, text: '0.5x' }
+            ]}
+          />
           <Controls.VolumeControl />
         </Controls.Bar>
         <Controls.ErrorView />

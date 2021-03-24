@@ -177,6 +177,38 @@ export class Player extends EventEmitter<DecoderEvents> {
     }
   }
 
+   /**
+   * 指示音频/视频的当前播放速度。
+   * 例值：
+   * 1.0 正常速度
+   * 0.5 半速（更慢）
+   * 2.0 倍速（更快）
+   * -1.0 向后，正常速度
+   * -0.5 向后，半速
+   */
+    setPlaybackRate (playbackRate: number) {
+      if (this.decoder) {
+        this.decoder.setPlaybackRate(playbackRate);
+      }
+    }
+
+    /**
+     * 指示音频/视频的当前播放速度。
+     * 例值：
+     * 1.0 正常速度
+     * 0.5 半速（更慢）
+     * 2.0 倍速（更快）
+     * -1.0 向后，正常速度
+     * -0.5 向后，半速
+     */
+    get playbackRate () {
+      if (this.decoder) {
+        return this.decoder.playbackRate;
+      }
+
+      return 0;
+    }
+
   destroy () {
     super.destroy();
     if (this.decoder) {

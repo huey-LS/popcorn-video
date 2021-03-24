@@ -41,6 +41,18 @@ export abstract class Decoder<EVENTS extends DecoderEvents = DecoderEvents> exte
   abstract volume: number;
   abstract setLoop (loop: boolean): void;
   abstract loop: boolean;
+
+  /**
+   * 指示音频/视频的当前播放速度。
+   * 例值：
+   * 1.0 正常速度
+   * 0.5 半速（更慢）
+   * 2.0 倍速（更快）
+   * -1.0 向后，正常速度
+   * -0.5 向后，半速
+   */
+  abstract setPlaybackRate (playbackRate: number): void;
+  abstract playbackRate: number;
   abstract buffered: number;
   abstract currentTime: number;
   abstract duration: number;
@@ -62,6 +74,7 @@ export interface DecoderEvents extends CommonEventConfig {
   'suspend': TypedEventCallback<Event<null>>, // 在媒体资源加载终止时触发，这可能是因为下载已完成或因为其他原因暂停。
   'timeupdate': TypedEventCallback<Event<null>>, // 元素的currentTime属性表示的时间已经改变。
   'volumechange': TypedEventCallback<Event<null>>, // 在音频音量改变时触发（既可以是volume属性改变，也可以是muted属性改变）.。
+  'ratechange': TypedEventCallback<Event<null>>, // 在播放速率改变时触发
 }
 
 export interface DecoderFactory<T> {

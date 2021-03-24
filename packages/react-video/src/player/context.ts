@@ -9,6 +9,7 @@ const videoPlayerContextContent: VideoPlayerContextType = {
   duration: 0,
   volume: 0,
   muted: true,
+  playbackRate: 0,
   error: null,
   readyState: 0,
   play: () => {},
@@ -16,6 +17,7 @@ const videoPlayerContextContent: VideoPlayerContextType = {
   seek: () => {},
   setMute: () => {},
   setVolume: () => {},
+  setPlaybackRate: () => {},
   refresh: () => {}
 };
 
@@ -26,6 +28,7 @@ export type VideoPlayerContextType = {
   duration: number,
   volume: number,
   muted: boolean,
+  playbackRate: number,
   loading?: boolean,
   error: null|VideoError,
   readyState: number,
@@ -34,6 +37,7 @@ export type VideoPlayerContextType = {
   seek: (targetTime: number) => void,
   setMute: (muted: boolean) => void,
   setVolume: (volume: number) => void,
+  setPlaybackRate: (playbackRate: number) => void,
   refresh: () => void
 }
 

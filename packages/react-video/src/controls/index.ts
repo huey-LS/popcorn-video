@@ -1,5 +1,6 @@
 export { Bar } from './bar';
 export { PlayButton } from './play-button';
+export { PlaybackRateControl } from './playback-rate-control';
 export { RefreshButton } from './refresh-button';
 export { SpaceControl } from './space-control';
 export { ProgressControl } from './progress-control';

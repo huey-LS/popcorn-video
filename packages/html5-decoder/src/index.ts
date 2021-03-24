@@ -64,7 +64,7 @@ export abstract class HTML5BaseDecoder<ME extends HTMLVideoElement|HTMLAudioElem
     this.initEventFromElement([
       'canplay',
       'loadeddata', 'loadedmetadata', 'loadstart', 'progress', 'suspend',
-      'pause', 'play', 'seeked', 'timeupdate', 'volumechange'
+      'pause', 'play', 'seeked', 'timeupdate', 'volumechange', 'ratechange'
     ]);
   }
 
@@ -155,6 +155,22 @@ export abstract class HTML5BaseDecoder<ME extends HTMLVideoElement|HTMLAudioElem
 
   get loop () {
     return this._el.loop
+  }
+
+  /**
+   * 指示音频/视频的当前播放速度。
+   * 例值：
+   * 1.0 正常速度
+   * 0.5 半速（更慢）
+   * 2.0 倍速（更快）
+   * -1.0 向后，正常速度
+   * -0.5 向后，半速
+   */
+  setPlaybackRate (playbackRate: number) {
+    this._el.playbackRate = playbackRate;
+  }
+  get playbackRate () {
+    return this._el.playbackRate
   }
 
   destroy () {
