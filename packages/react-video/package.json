@@ -32,7 +32,7 @@
   "devDependencies": {
     "@popcorn-video/flvjs-decoder": "^0.1.10",
     "@popcorn-video/hlsjs-decoder": "^0.1.8",
-    "@popcorn-video/html5-decoder": "^0.1.10",
+    "@popcorn-video/html5-decoder": "^0.1.11",
     "@types/react": "^16.9.15",
     "@types/react-dom": "^16.9.4",
     "cross-env": "^6.0.3",
